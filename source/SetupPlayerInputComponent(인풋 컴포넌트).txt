@@ -1,0 +1,21 @@
+void Aplayer_char::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+{
+	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
+	/*축 이벤트 등록*/
+
+	this->InputComponent->BindAxis("front_back", this, &Aplayer_char::move_front_and_back);//앞뒤로 이동.
+	this->InputComponent->BindAxis("mouse_turn", this, &Aplayer_char::mouse_turn);//마우스 수평 돌리기
+	this->InputComponent->BindAxis("mouse_up_down", this, &Aplayer_char::mouse_up_down);//마우스 수직 돌리기
+	this->InputComponent->BindAxis("left_right", this, &Aplayer_char::move_left_right);//양폎으로 이동
+	this->InputComponent->BindAxis("attack", this, &Aplayer_char::attack_shot);//발사 마우스 좌클
+
+
+	/*액션 이벤트 등록*/
+
+	InputComponent->BindAction("jump", IE_Pressed, this, &Aplayer_char::jumpIn);//점프
+
+	InputComponent->BindAction("quit", IE_Pressed, this, &Aplayer_char::quitIn);//게임 종료
+	
+
+}

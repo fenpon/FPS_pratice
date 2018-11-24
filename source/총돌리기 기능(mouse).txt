@@ -1,0 +1,59 @@
+void Aplayer_char::mouse_turn(float axis_normalize) //총돌리기 마우스 좌우
+{
+	if (axis_normalize != 0)
+	{
+		//move
+
+		float mouse_sensity_tick = mouse_sensity_horizon *  GetWorld()->GetDeltaSeconds();
+		//마우스 수평 감도와 틱값을 곱셈을 하여 프레임 대응 회전값 얻습니다.
+		float rot = axis_normalize * mouse_sensity_tick; 
+		//axis_normalize 의 값은 마우스의 회전 값입니다.
+		
+		AddControllerYawInput((rot));
+	}
+}
+
+
+void Aplayer_char::mouse_up_down(float axis_normalize) //총돌리기 마우스 위아래
+{
+	if (axis_normalize != 0)
+	{
+		//move
+		if (!first_enter_mouse_locker)//초기 설정이 끝났는지 확인합니다.
+		{ 
+			float mouse_sensity_tick;//마우스 감도의 프레임 대응값을 저장하는 변수입니다.
+			if (axis_normalize < 0)
+			{
+				if (camera->RelativeRotation.Pitch > -50)//카메라가 상 피치 값 제한
+				{
+					mouse_sensity_tick = mouse_sensity_verticle *  GetWorld()->GetDeltaSeconds();//마우스 수직 감도의 프레임 대응
+					float rot = axis_normalize * mouse_sensity_tick;//이동 크기 * 마우스 수직 감도의 프레임 대응값
+					if (anim_inst != nullptr)
+					{
+						/*총구 돌리는 애니메이션(블랜드 스페이스)에 위아래 회전값을 주는 기능 입니다.*/
+						ani_x += rot;
+						anim_this->x = ani_x;
+					}
+
+				}
+			}
+			else
+			{
+				if (camera->RelativeRotation.Pitch < 50)//카메라가 하 피치 값 제한
+				{
+					mouse_sensity_tick = mouse_sensity_verticle *  GetWorld()->GetDeltaSeconds();//마우스 수직 감도의 프레임 대응
+					float rot = axis_normalize * mouse_sensity_tick;//이동 크기 * 마우스 수직 감도의 프레임 대응값
+					if (anim_inst != nullptr)
+					{
+						/*총구 돌리는 애니메이션(블랜드 스페이스)에 위아래 회전값을 주는 기능 입니다.*/
+						ani_x += rot;
+						anim_this->x = ani_x;	
+					}
+				}
+			}
+			
+		}
+	}
+
+}
+

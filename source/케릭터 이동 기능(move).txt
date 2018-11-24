@@ -1,0 +1,55 @@
+void Aplayer_char::move_left_right(float axis_normalize)//양옆으로 이동
+{
+	if (axis_normalize != 0)
+	{
+		//move
+		if (anim_inst != nullptr)
+		{
+			anim_this->I_RUN_now = 0.5;//달리기 모션 블랜딩 실행
+		}
+		FRotationMatrix Now_I_Look_Direction_Matrix = (FRotator(0, GetControlRotation().Yaw, 0)); 
+		FVector Now_I_Look_Direction = Now_I_Look_Direction_Matrix.GetScaledAxis(EAxis::Y);
+		//ukismetmathlibrary에서 가져왔습니다. //오른쪽 벡터 공간의 값
+																						 
+		AddMovementInput(Now_I_Look_Direction, axis_normalize);
+		//오른쪽 벡터 공간의 값 을 기준으로 axis_normalize만큼 이동합니다.
+
+	}
+	else
+	{
+		if (anim_inst != nullptr)
+		{
+			
+		}
+	}
+}
+
+
+
+void Aplayer_char::move_front_and_back(float axis_normalize) //앞뒤로 이동
+{
+	if (axis_normalize != 0)
+	{
+		//move
+		if (anim_inst != nullptr)
+		{
+			anim_this->I_RUN_now = 0.5;//달리기 모션 블랜딩 실행
+		}
+		
+	
+		FVector Now_I_Look_Direction = FRotator(0, (GetControlRotation().Yaw), 0).Vector();
+		// 현재 yaw 회전각 얻기    ukismetmathlibrary에서 가져옴
+		AddMovementInput(Now_I_Look_Direction, axis_normalize);
+		//Movement에 yaw축의 뱡향으로 axis_normalize만큼 이동합니다.
+	
+	}
+	else
+	{
+		if (anim_inst != nullptr)
+		{
+			if (anim_this->I_RUN_now == 0.5)//달리기 모션 블랜딩 실행중일때
+				anim_this->I_RUN_now = 0;//달리기 모션 블랜딩 취소 실행
+		}
+	}
+
+}
